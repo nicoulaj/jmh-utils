@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>net.ju-n</groupId>
+    <artifactId>net-ju-n-parent</artifactId>
+    <version>32</version>
+  </parent>
+
+  <groupId>net.ju-n.jmh-utils</groupId>
+  <artifactId>jmh-utils</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>JMH utils</name>
+  <inceptionYear>2014</inceptionYear>
+  <description>Utilities/addons for JMH.</description>
+  <url>http://nicoulaj.github.com/jmh-utils</url>
+
+  <scm>
+    <url>http://github.com/nicoulaj/jmh-utils</url>
+    <connection>scm:git:git@github.com:nicoulaj/jmh-utils.git</connection>
+    <developerConnection>scm:git:git@github.com:nicoulaj/jmh-utils.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
+  <issueManagement>
+    <system>Github</system>
+    <url>http://github.com/nicoulaj/jmh-utils/issues</url>
+  </issueManagement>
+
+  <ciManagement>
+    <system>Travis CI</system>
+    <url>http://travis-ci.org/nicoulaj/jmh-utils</url>
+  </ciManagement>
+
+  <distributionManagement>
+    <site>
+      <id>github</id>
+      <url>gitsite:git@github.com/nicoulaj/jmh-utils.git</url>
+    </site>
+  </distributionManagement>
+
+  <properties>
+    <license>gpl_v3</license>
+    <java.level>1.7</java.level>
+    <jmh.version>0.9.1</jmh.version>
+    <assertj.version>1.6.1</assertj.version>
+  </properties>
+
+  <modules>
+    <module>jmh-assertions</module>
+    <module>jmh-profilers</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.openjdk.jmh</groupId>
+        <artifactId>jmh-core</artifactId>
+        <version>${jmh.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.openjdk.jmh</groupId>
+        <artifactId>jmh-generator-annprocess</artifactId>
+        <version>${jmh.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-core</artifactId>
+        <version>${assertj.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>net.ju-n.jmh-utils</groupId>
+        <artifactId>jmh-assertions</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>${java.level}</source>
+          <target>${java.level}</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
