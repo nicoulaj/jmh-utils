@@ -37,7 +37,9 @@ import static java.lang.Integer.getInteger;
 import static java.lang.System.getProperty;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
-import static net.nicoulaj.jmh.profilers.ProfilerUtil.*;
+import static net.nicoulaj.jmh.profilers.StringUtils.join;
+import static net.nicoulaj.jmh.profilers.SystemUtils.JVM.getJVM;
+import static net.nicoulaj.jmh.profilers.SystemUtils.getBoolean;
 import static org.openjdk.jmh.results.AggregationPolicy.SUM;
 import static org.openjdk.jmh.results.ResultRole.SECONDARY;
 
@@ -157,8 +159,13 @@ public final class FlightRecorderProfiler implements ExternalProfiler {
 
     @Override
     public Collection<String> checkSupport() {
-        if (isHotSpot()) return emptyList();
-        return asList("This JVM does not support Java Flight Recorder");
+        switch (getJVM()) {
+        case HOTSPOT:
+        case JROCKIT:
+            return emptyList();
+        default:
+            return asList("This JVM does not support Java Flight Recorder");
+        }
     }
 
     @Override
