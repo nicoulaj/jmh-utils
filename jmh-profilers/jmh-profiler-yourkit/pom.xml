@@ -18,6 +18,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>net.ju-n.jmh-utils</groupId>
+      <artifactId>jmh-profiler-utils</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
       <groupId>org.openjdk.jmh</groupId>
       <artifactId>jmh-core</artifactId>
       <scope>provided</scope>

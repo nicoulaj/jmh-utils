@@ -26,5 +26,9 @@ core.*
 # Java Flight Recorder files
 *.jfr
 
+# Yourkit files
+*.snapshot
+*.log
+
 # Local stuff
 local/

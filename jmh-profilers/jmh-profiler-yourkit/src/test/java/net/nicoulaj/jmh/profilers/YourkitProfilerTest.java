@@ -8,12 +8,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -25,10 +25,13 @@ import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
+import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.createTempFile;
+import static java.nio.file.Paths.get;
 import static net.nicoulaj.jmh.assertions.JMHAssertions.assertJMH;
+import static net.nicoulaj.jmh.profilers.YourkitUtils.detectYourkitAgentLib;
+import static net.nicoulaj.jmh.profilers.YourkitUtils.detectYourkitHome;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.contentOf;
 
@@ -42,9 +45,11 @@ public class YourkitProfilerTest {
     @Test
     public void test001() throws Exception {
 
-        if (true) throw new SkipException("Not implemented");
+        if (detectYourkitHome() == null || detectYourkitAgentLib() == null)
+            throw new SkipException("Profiler not available in this environment, cannot test");
 
-        final Path output = createTempFile(Paths.get("target"), "jmh-output-", ".log");
+        createDirectories(get("target"));
+        final Path output = createTempFile(get("target"), "jmh-output-", ".log");
 
         assertJMH()
                 .output(output.toString())
@@ -53,6 +58,7 @@ public class YourkitProfilerTest {
 
         assertThat(contentOf(output.toFile()))
                 .contains("# Preparing profilers: yourkit")
-                .contains("# Processing profiler results: yourkit");
+                .contains("# Processing profiler results: yourkit")
+                .contains("Yourkit snapshot at ");
     }
 }
