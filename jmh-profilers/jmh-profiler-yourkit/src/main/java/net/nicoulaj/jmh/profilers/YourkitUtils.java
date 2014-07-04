@@ -16,6 +16,11 @@ public final class YourkitUtils {
         // Static class
     }
 
+    /**
+     * Detect Yourkit installation directory.
+     *
+     * @return {@code null} if detection failed
+     */
     public static String detectYourkitHome() {
 
         // Try yourkit.home sysprop
@@ -30,6 +35,11 @@ public final class YourkitUtils {
         return yourkitHome;
     }
 
+    /**
+     * Detect Yourkit agent library to use for current OS/arch/bitness.
+     *
+     * @return {@code null} if detection failed
+     */
     public static String detectYourkitAgentLib() {
         // After http://www.yourkit.com/docs/java/help/agent.jsp
         switch (getOS()) {
