@@ -8,12 +8,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -37,9 +37,7 @@ import static java.lang.Integer.getInteger;
 import static java.lang.System.getProperty;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
-import static joptsimple.internal.Strings.join;
-import static net.nicoulaj.jmh.profilers.ProfilerUtil.getBoolean;
-import static net.nicoulaj.jmh.profilers.ProfilerUtil.isHotSpot;
+import static net.nicoulaj.jmh.profilers.ProfilerUtil.*;
 import static org.openjdk.jmh.results.AggregationPolicy.SUM;
 import static org.openjdk.jmh.results.ResultRole.SECONDARY;
 
@@ -48,7 +46,7 @@ import static org.openjdk.jmh.results.ResultRole.SECONDARY;
  *
  * @author <a href="http://github.com/nicoulaj">nicoulaj</a>
  */
-public class FlightRecorderProfiler implements ExternalProfiler {
+public final class FlightRecorderProfiler implements ExternalProfiler {
 
     /**
      * Specifies whether the recording is a continuous background recording or it runs for a limited time.
@@ -172,7 +170,6 @@ public class FlightRecorderProfiler implements ExternalProfiler {
     public Collection<String> addJVMOptions(final BenchmarkParams params) {
 
         final List<String> opts = new ArrayList<>();
-
         if (DEFAULT_RECORDING != null) opts.add("defaultrecording=" + String.valueOf(DEFAULT_RECORDING));
         if (DISK != null) opts.add("disk=" + String.valueOf(DISK));
         if (DUMP_ON_EXIT != null) opts.add("dumponexit=" + String.valueOf(DUMP_ON_EXIT));
@@ -190,7 +187,7 @@ public class FlightRecorderProfiler implements ExternalProfiler {
 
         return asList("-XX:+UnlockCommercialFeatures",
                       "-XX:+FlightRecorder",
-                      "-XX:FlightRecorderOptions=" + join(opts, ","));// FIXME Uses a JMH dependency (joptsimple)
+                      "-XX:FlightRecorderOptions=" + join(",", opts));
     }
 
     @Override
