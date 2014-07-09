@@ -53,6 +53,7 @@ public final class YourkitUtils {
         case LINUX:
             switch (getArch()) {
             case X86:
+            case AMD64:
                 switch (getBitness()) {
                 case BITS_32:
                     return "bin/linux-x86-32/libyjpagent.so";
@@ -60,19 +61,14 @@ public final class YourkitUtils {
                     return "bin/linux-x86-64/libyjpagent.so";
                 }
             case PPC:
-                switch (getBitness()) {
-                case BITS_32:
-                    return "bin/linux-ppc-32/libyjpagent.so";
-                }
+                return "bin/linux-ppc-32/libyjpagent.so";
             case PPC64:
-                switch (getBitness()) {
-                case BITS_64:
-                    return "bin/linux-ppc-64/libyjpagent.so";
-                }
+                return "bin/linux-ppc-64/libyjpagent.so";
             }
         case SOLARIS:
             switch (getArch()) {
             case X86:
+            case AMD64:
                 switch (getBitness()) {
                 case BITS_32:
                     return "bin/linux-x86-32/libyjpagent.so";

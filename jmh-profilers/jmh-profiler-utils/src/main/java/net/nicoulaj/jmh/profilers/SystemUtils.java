@@ -139,6 +139,7 @@ public final class SystemUtils {
     public static enum Architecture {
 
         X86,
+        AMD64,
         ARM,
         PPC,
         PPC64,
@@ -150,13 +151,14 @@ public final class SystemUtils {
             // FIXME "Works on my machine"
             switch (getProperty("os.arch", "unknown").toLowerCase()) {
             case "x86":
-            case "x86_64":
-            case "amd64":
             case "i386":
             case "i486":
             case "i586":
             case "i686":
                 return X86;
+            case "x86_64":
+            case "amd64":
+                return AMD64;
             case "sparc":
                 return SPARC;
             case "ppc":
