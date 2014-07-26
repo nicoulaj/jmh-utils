@@ -350,20 +350,30 @@ public final class YourkitProfiler implements ExternalProfiler {
     }
 
     @Override
-    public Collection<String> checkSupport() {
-        final List<String> messages = new ArrayList<>();
+    public boolean allowPrintOut() {
+        return true;
+    }
 
-        if (YOURKIT_HOME == null)
-            messages.add("Failed to detect Yourkit installation directory, " +
+    @Override
+    public boolean allowPrintErr() {
+        return true;
+    }
+
+    @Override
+    public boolean checkSupport(List<String> msgs) {
+        if (YOURKIT_HOME == null) {
+            msgs.add("Failed to detect Yourkit installation directory, " +
                          "please specify it manually with -Djmh.yourkit.home, " +
                          "-Dyourkit.home, or YOURKIT_HOME");
-
-        if (YOURKIT_AGENT_LIB == null)
-            messages.add("Failed to detect which Yourkit agent library to use, " +
+            return false;
+        }
+        if (YOURKIT_AGENT_LIB == null) {
+            msgs.add("Failed to detect which Yourkit agent library to use, " +
                          "please specify it manually with -Djmh.yourkit.agentlib=bin/<os>-<arch>/agent.so " +
                          "(eg: \"bin/linux-x86-64/libyjpagent.so\")");
-
-        return messages;
+            return false;
+        }
+        return true;
     }
 
     @Override

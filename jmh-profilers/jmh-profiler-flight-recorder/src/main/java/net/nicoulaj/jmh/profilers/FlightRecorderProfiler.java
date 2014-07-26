@@ -156,16 +156,25 @@ public final class FlightRecorderProfiler implements ExternalProfiler {
     public String getDescription() {
         return "Java Flight Recorder";
     }
+    @Override
+    public boolean allowPrintOut() {
+        return true;
+    }
 
     @Override
-    public Collection<String> checkSupport() {
+    public boolean allowPrintErr() {
+        return true;
+    }
+
+    @Override
+    public boolean checkSupport(List<String> msgs) {
         switch (getJVM()) {
         case HOTSPOT:
         case JROCKIT:
-            return emptyList();
-        default:
-            return asList("This JVM does not support Java Flight Recorder");
+            return true;
         }
+        msgs.add("This JVM does not support Java Flight Recorder");
+        return false;
     }
 
     @Override

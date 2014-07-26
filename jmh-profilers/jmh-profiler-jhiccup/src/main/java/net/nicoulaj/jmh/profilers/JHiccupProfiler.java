@@ -8,12 +8,12 @@
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -27,6 +27,7 @@ import org.openjdk.jmh.results.Result;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * <a href="http://www.azulsystems.com/jHiccup">jHiccup</a> support for <a href="http://openjdk.java.net/projects/code-tools/jmh">JMH</a>.
@@ -46,7 +47,17 @@ public class JHiccupProfiler implements ExternalProfiler {
     }
 
     @Override
-    public Collection<String> checkSupport() {
+    public boolean allowPrintOut() {
+        return true;
+    }
+
+    @Override
+    public boolean allowPrintErr() {
+        return true;
+    }
+
+    @Override
+    public boolean checkSupport(List<String> msgs) {
         throw new UnsupportedOperationException("Not implemented");
     }
 
