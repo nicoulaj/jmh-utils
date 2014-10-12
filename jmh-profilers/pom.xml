@@ -20,9 +20,9 @@
   <modules>
     <module>jmh-profiler-utils</module>
     <module>jmh-profiler-flight-recorder</module>
-    <module>jmh-profiler-heapaudit</module>
-    <module>jmh-profiler-honest-profiler</module>
-    <module>jmh-profiler-jhiccup</module>
+    <!--<module>jmh-profiler-heapaudit</module>-->
+    <!--<module>jmh-profiler-honest-profiler</module>-->
+    <!--<module>jmh-profiler-jhiccup</module>-->
     <module>jmh-profiler-solaris-studio</module>
     <module>jmh-profiler-yourkit</module>
   </modules>
