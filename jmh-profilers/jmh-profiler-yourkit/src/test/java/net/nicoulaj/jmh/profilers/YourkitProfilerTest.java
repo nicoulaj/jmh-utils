@@ -51,6 +51,9 @@ public class YourkitProfilerTest {
         createDirectories(get("target"));
         final Path output = createTempFile(get("target"), "jmh-output-", ".log");
 
+        System.setProperty("jmh.yourkit.dir", "target");
+        System.setProperty("jmh.yourkit.logdir", "target");
+
         assertJMH()
                 .output(output.toString())
                 .addProfiler(YourkitProfiler.class)

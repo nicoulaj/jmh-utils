@@ -55,6 +55,8 @@ public class FlightRecorderProfilerTest {
         createDirectories(get("target"));
         final Path output = createTempFile(get("target"), "jmh-output-", ".log");
 
+        System.setProperty("jmh.jfr.dumponexitpath", "target");
+
         assertJMH()
                 .output(output.toString())
                 .addProfiler(FlightRecorderProfiler.class)
