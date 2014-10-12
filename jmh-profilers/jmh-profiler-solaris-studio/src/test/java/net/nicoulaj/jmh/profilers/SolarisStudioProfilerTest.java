@@ -24,11 +24,13 @@ package net.nicoulaj.jmh.profilers;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static java.nio.file.Files.createTempFile;
 import static net.nicoulaj.jmh.assertions.JMHAssertions.assertJMH;
+import static net.nicoulaj.jmh.profilers.SolarisStudioUtils.isCollectAvailable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.contentOf;
 
@@ -42,9 +44,12 @@ public class SolarisStudioProfilerTest {
     @Test
     public void test001() throws Exception {
 
-        if (true) throw new SkipException("Not implemented");
+        if (!isCollectAvailable())
+            throw new SkipException("Profiler not available in this environment, cannot test");
 
         final Path output = createTempFile(Paths.get("target"), "jmh-output-", ".log");
+
+        System.setProperty("jmh.solaris-studio.directory", "target");
 
         assertJMH()
                 .output(output.toString())
@@ -54,6 +59,8 @@ public class SolarisStudioProfilerTest {
         assertThat(contentOf(output.toFile()))
                 .contains("# Preparing profilers: solaris-studio")
                 .contains("# Processing profiler results: solaris-studio")
-                .contains("Java Flight Recorder recording at ");
+                .contains("Solaris Studio experiment at ");
+
+        assertThat(new File("target/test.1.er")).isDirectory();
     }
 }

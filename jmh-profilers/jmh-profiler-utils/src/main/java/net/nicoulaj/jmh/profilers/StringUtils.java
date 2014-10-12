@@ -21,6 +21,10 @@
  */
 package net.nicoulaj.jmh.profilers;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.Iterator;
 
 import static java.util.Arrays.asList;
@@ -31,6 +35,8 @@ import static java.util.Arrays.asList;
  * @author <a href="http://github.com/nicoulaj">nicoulaj</a>
  */
 public final class StringUtils {
+
+    private static final int BUFFER_SIZE = 4 * 1024;
 
     private StringUtils() {
         // Static class
@@ -61,5 +67,34 @@ public final class StringUtils {
             if (iter.hasNext()) buffer.append(separator);
         }
         return buffer.toString();
+    }
+
+    /**
+     * Read an {@link InputStream}  into a {@link String}.
+     *
+     * @param inputStream input stream
+     * @return output string
+     * @throws IOException if failed to read from stream
+     */
+    public static String toString(InputStream inputStream) throws IOException {
+        return toString(inputStream, Charset.defaultCharset());
+    }
+
+    /**
+     * Read an {@link InputStream}  into a {@link String}.
+     *
+     * @param inputStream input stream
+     * @param charset     charset to use
+     * @return output string
+     * @throws IOException if failed to read from stream
+     */
+    public static String toString(InputStream inputStream, Charset charset) throws IOException {
+        final StringBuilder builder = new StringBuilder();
+        final InputStreamReader reader = new InputStreamReader(inputStream, charset);
+        final char[] buffer = new char[BUFFER_SIZE];
+        int length;
+        while ((length = reader.read(buffer)) != -1)
+            builder.append(buffer, 0, length);
+        return builder.toString();
     }
 }

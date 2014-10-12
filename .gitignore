@@ -30,5 +30,8 @@ core.*
 *.snapshot
 *.log
 
+# Solaris Studio files
+*.er
+
 # Local stuff
 local/
