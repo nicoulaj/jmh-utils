@@ -61,8 +61,14 @@ final class RunResultAssert implements JMHRunResultAssert {
     }
 
     public JMHRunResultAssert hasPrimaryScoreOver(double value, double tolerance) {
-        if (runResult.getPrimaryResult().getScore() >= value - tolerance)
-            throw new AssertionError();
+        final double primaryScore = runResult.getPrimaryResult().getScore();
+        if (primaryScore < value - tolerance)
+            throw new AssertionError("Expected score over " + format(value, tolerance) + ", actual score is " + primaryScore);
         return this;
+    }
+
+    private static String format(double value, double tolerance) {
+        if (tolerance == 0) return String.valueOf(value);
+        return value + "±" + tolerance;
     }
 }

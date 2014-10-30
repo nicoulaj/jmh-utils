@@ -39,7 +39,11 @@ public class JMHAssertionsTest {
 
     @Test
     public void test002() {
-        assertJMH().runsWithoutError()
-                   .hasResults();
+        assertJMH().hasResults();
+    }
+
+    @Test
+    public void test003() {
+        assertJMH().hasScoreOver(0.1);
     }
 }

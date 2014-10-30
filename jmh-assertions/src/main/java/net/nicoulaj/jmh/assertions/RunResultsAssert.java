@@ -61,13 +61,12 @@ final class RunResultsAssert implements JMHRunResultsAssert {
 
     @Override
     public JMHRunResultsAssert hasScoreOver(double value) {
-        for (RunResultAssert runResultAssert : runResultAsserts)
-            runResultAssert.hasScoreOver(value);
-        return this;
+        return hasScoreOver(value, 0);
     }
 
     @Override
     public JMHRunResultsAssert hasScoreOver(final double value, final double tolerance) {
+        hasResults();
         for (RunResultAssert runResultAssert : runResultAsserts)
             runResultAssert.hasScoreOver(value, tolerance);
         return this;
