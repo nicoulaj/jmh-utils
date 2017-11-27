@@ -23,6 +23,9 @@ package net.nicoulaj.jmh.profilers;
 
 import org.openjdk.jmh.util.AbstractStatistics;
 
+import java.util.Iterator;
+import java.util.Map;
+
 /**
  * Dummy {@link org.openjdk.jmh.util.Statistics}.
  *
@@ -58,5 +61,30 @@ public class EmptyStatistics extends AbstractStatistics {
     @Override
     public double getPercentile(final double rank) {
         return 0;
+    }
+
+    @Override
+    public int[] getHistogram(double[] doubles) {
+        return new int[0];
+    }
+
+    @Override
+    public Iterator<Map.Entry<Double, Long>> getRawData() {
+        return new Iterator<Map.Entry<Double, Long>>() {
+            @Override
+            public boolean hasNext() {
+                return false;
+            }
+
+            @Override
+            public Map.Entry<Double, Long> next() {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
     }
 }

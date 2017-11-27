@@ -63,8 +63,8 @@ public class FlightRecorderProfilerTest {
                 .runsWithoutError();
 
         assertThat(contentOf(output.toFile()))
-                .contains("# Preparing profilers: jfr")
-                .contains("# Processing profiler results: jfr")
+                .contains("# Preparing profilers: FlightRecorderProfiler")
+                .contains("# Processing profiler results: FlightRecorderProfiler")
                 .contains("Java Flight Recorder recording at ");
     }
 }

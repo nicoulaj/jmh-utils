@@ -24,6 +24,7 @@ package net.nicoulaj.jmh.profilers;
 import org.openjdk.jmh.infra.BenchmarkParams;
 import org.openjdk.jmh.profile.ExternalProfiler;
 import org.openjdk.jmh.results.Aggregator;
+import org.openjdk.jmh.results.BenchmarkResult;
 import org.openjdk.jmh.results.Result;
 
 import java.io.File;
@@ -36,7 +37,6 @@ import java.util.List;
 import static java.lang.Integer.getInteger;
 import static java.lang.System.getProperty;
 import static java.util.Arrays.asList;
-import static net.nicoulaj.jmh.profilers.SolarisStudioUtils.isCollectAvailable;
 import static org.openjdk.jmh.results.AggregationPolicy.SUM;
 import static org.openjdk.jmh.results.ResultRole.SECONDARY;
 
@@ -174,11 +174,6 @@ public class SolarisStudioProfiler implements ExternalProfiler {
     private static final String LABEL = getProperty("jmh.solaris-studio.label", null);
 
     @Override
-    public String label() {
-        return "solaris-studio";
-    }
-
-    @Override
     public String getDescription() {
         return "Solaris Studio";
     }
@@ -190,15 +185,6 @@ public class SolarisStudioProfiler implements ExternalProfiler {
 
     @Override
     public boolean allowPrintErr() {
-        return true;
-    }
-
-    @Override
-    public boolean checkSupport(List<String> msgs) {
-        if (!isCollectAvailable()) {
-            msgs.add("Failed to locate 'collect' command in PATH");
-            return false;
-        }
         return true;
     }
 
@@ -293,7 +279,7 @@ public class SolarisStudioProfiler implements ExternalProfiler {
     }
 
     @Override
-    public Collection<? extends Result> afterTrial(final BenchmarkParams benchmarkParams, final File stdOut, final File stdErr) {
+    public Collection<? extends Result> afterTrial(final BenchmarkResult benchmarkResult, long l, final File stdOut, final File stdErr) {
         return asList(new SolarisStudioResult());
     }
 
@@ -314,12 +300,12 @@ public class SolarisStudioProfiler implements ExternalProfiler {
         }
 
         @Override
-        protected String simpleExtendedInfo(final String label) {
+        protected String simpleExtendedInfo() {
             return "Solaris Studio experiment at " + Paths.get(DIRECTORY).toAbsolutePath();
         }
 
         @Override
-        public Result aggregate(final Collection<SolarisStudioResult> results) {
+        public SolarisStudioResult aggregate(final Collection<SolarisStudioResult> results) {
             return new SolarisStudioResult();
         }
     }

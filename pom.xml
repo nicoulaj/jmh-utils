@@ -47,7 +47,7 @@
   <properties>
     <license>gpl_v3</license>
     <java.level>1.7</java.level>
-    <jmh.version>1.1.1</jmh.version>
+    <jmh.version>1.19</jmh.version>
     <assertj.version>1.7.0</assertj.version>
   </properties>
 
