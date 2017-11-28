@@ -24,6 +24,7 @@ package net.nicoulaj.jmh.profilers;
 import org.openjdk.jmh.infra.BenchmarkParams;
 import org.openjdk.jmh.profile.ExternalProfiler;
 import org.openjdk.jmh.results.Aggregator;
+import org.openjdk.jmh.results.BenchmarkResult;
 import org.openjdk.jmh.results.Result;
 
 import java.io.File;
@@ -38,7 +39,6 @@ import static java.lang.System.getProperty;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static net.nicoulaj.jmh.profilers.StringUtils.join;
-import static net.nicoulaj.jmh.profilers.SystemUtils.JVM.getJVM;
 import static net.nicoulaj.jmh.profilers.SystemUtils.getBoolean;
 import static org.openjdk.jmh.results.AggregationPolicy.SUM;
 import static org.openjdk.jmh.results.ResultRole.SECONDARY;
@@ -148,11 +148,6 @@ public final class FlightRecorderProfiler implements ExternalProfiler {
     private static final String THREAD_BUFFER_SIZE = getProperty("jmh.jfr.threadbuffersize", null);
 
     @Override
-    public String label() {
-        return "jfr";
-    }
-
-    @Override
     public String getDescription() {
         return "Java Flight Recorder";
     }
@@ -164,17 +159,6 @@ public final class FlightRecorderProfiler implements ExternalProfiler {
     @Override
     public boolean allowPrintErr() {
         return true;
-    }
-
-    @Override
-    public boolean checkSupport(List<String> msgs) {
-        switch (getJVM()) {
-        case HOTSPOT:
-        case JROCKIT:
-            return true;
-        }
-        msgs.add("This JVM does not support Java Flight Recorder");
-        return false;
     }
 
     @Override
@@ -212,7 +196,7 @@ public final class FlightRecorderProfiler implements ExternalProfiler {
     }
 
     @Override
-    public Collection<? extends Result> afterTrial(final BenchmarkParams benchmarkParams, final File stdOut, final File stdErr) {
+    public Collection<? extends Result> afterTrial(BenchmarkResult benchmarkResult, long l, final File stdOut, final File stdErr) {
         return asList(new JFRResult());
     }
 
@@ -233,12 +217,12 @@ public final class FlightRecorderProfiler implements ExternalProfiler {
         }
 
         @Override
-        protected String simpleExtendedInfo(final String label) {
+        protected String simpleExtendedInfo() {
             return "Java Flight Recorder recording at " + Paths.get(DUMP_ON_EXIT_PATH).toAbsolutePath();
         }
 
         @Override
-        public Result aggregate(final Collection<JFRResult> results) {
+        public JFRResult aggregate(final Collection<JFRResult> results) {
             return new JFRResult();
         }
     }

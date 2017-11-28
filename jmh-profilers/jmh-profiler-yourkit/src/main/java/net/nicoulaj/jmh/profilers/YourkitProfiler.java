@@ -24,6 +24,7 @@ package net.nicoulaj.jmh.profilers;
 import org.openjdk.jmh.infra.BenchmarkParams;
 import org.openjdk.jmh.profile.ExternalProfiler;
 import org.openjdk.jmh.results.Aggregator;
+import org.openjdk.jmh.results.BenchmarkResult;
 import org.openjdk.jmh.results.Result;
 
 import java.io.File;
@@ -340,11 +341,6 @@ public final class YourkitProfiler implements ExternalProfiler {
     private static final Boolean DISABLE_ALL = getBoolean("jmh.yourkit.disableall", null);
 
     @Override
-    public String label() {
-        return "yourkit";
-    }
-
-    @Override
     public String getDescription() {
         return "Yourkit";
     }
@@ -356,23 +352,6 @@ public final class YourkitProfiler implements ExternalProfiler {
 
     @Override
     public boolean allowPrintErr() {
-        return true;
-    }
-
-    @Override
-    public boolean checkSupport(List<String> msgs) {
-        if (YOURKIT_HOME == null) {
-            msgs.add("Failed to detect Yourkit installation directory, " +
-                         "please specify it manually with -Djmh.yourkit.home, " +
-                         "-Dyourkit.home, or YOURKIT_HOME");
-            return false;
-        }
-        if (YOURKIT_AGENT_LIB == null) {
-            msgs.add("Failed to detect which Yourkit agent library to use, " +
-                         "please specify it manually with -Djmh.yourkit.agentlib=bin/<os>-<arch>/agent.so " +
-                         "(eg: \"bin/linux-x86-64/libyjpagent.so\")");
-            return false;
-        }
         return true;
     }
 
@@ -433,7 +412,7 @@ public final class YourkitProfiler implements ExternalProfiler {
     }
 
     @Override
-    public Collection<? extends Result> afterTrial(final BenchmarkParams benchmarkParams, final File stdOut, final File stdErr) {
+    public Collection<? extends Result> afterTrial(final BenchmarkResult benchmarkParams, long l, final File stdOut, final File stdErr) {
         return asList(new YourkitResult());
     }
 
@@ -454,13 +433,13 @@ public final class YourkitProfiler implements ExternalProfiler {
         }
 
         @Override
-        protected String simpleExtendedInfo(final String label) {
-            return "Yourkit snapshot at " + Paths.get(DIR).toAbsolutePath();
+        public YourkitResult aggregate(Collection<YourkitResult> collection) {
+            return new YourkitResult();
         }
 
         @Override
-        public Result aggregate(final Collection<YourkitResult> results) {
-            return new YourkitResult();
+        protected String simpleExtendedInfo() {
+            return "Yourkit snapshot at " + Paths.get(DIR).toAbsolutePath();
         }
     }
 }
