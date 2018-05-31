@@ -57,8 +57,8 @@ public class YourkitProfilerTest {
                 .runsWithoutError();
 
         assertThat(contentOf(output.toFile()))
-                .contains("# Preparing profilers: yourkit")
-                .contains("# Processing profiler results: yourkit")
+                .containsIgnoringCase("# Preparing profilers: yourkit")
+                .containsIgnoringCase("# Processing profiler results: yourkit")
                 .contains("Yourkit snapshot at ");
     }
 }
