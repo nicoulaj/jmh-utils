@@ -27,7 +27,7 @@
   <parent>
     <groupId>net.nicoulaj</groupId>
     <artifactId>parent</artifactId>
-    <version>53</version>
+    <version>54</version>
   </parent>
 
   <groupId>net.nicoulaj.jmh-utils</groupId>
@@ -67,8 +67,8 @@
   <properties>
     <license>gpl_v3</license>
     <java.level>1.8</java.level>
-    <jmh.version>1.20</jmh.version>
-    <assertj.version>3.9.1</assertj.version>
+    <jmh.version>1.21</jmh.version>
+    <assertj.version>3.11.1</assertj.version>
   </properties>
 
   <modules>
