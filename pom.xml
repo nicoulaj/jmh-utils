@@ -27,7 +27,7 @@
   <parent>
     <groupId>net.nicoulaj</groupId>
     <artifactId>parent</artifactId>
-    <version>54</version>
+    <version>60</version>
   </parent>
 
   <groupId>net.nicoulaj.jmh-utils</groupId>
